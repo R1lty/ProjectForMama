@@ -119,16 +119,16 @@
           {{ question || 'Текст вопроса будет здесь' }}
         </div>
 
+        @if (image) {
+            <div class="preview-image-url">
+              <img src="/assets/img/{{ image }}"/>
+            </div>
+          }
+
         <div class="preview-answer">
           Правильный ответ:
           <strong>{{ answer || 'Ответ будет здесь' }}</strong>
         </div>
-
-        @if (image) {
-          <div class="preview-image-url">
-            Image: {{ image }}
-          </div>
-        }
       </div>
 
       <div class="preview-info">

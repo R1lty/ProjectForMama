@@ -135,6 +135,10 @@
   word-break: break-all;
 }
 
+.preview-image-url img{
+  width: 100%;
+}
+
 .preview-info {
   margin-top: 18px;
   padding: 16px;

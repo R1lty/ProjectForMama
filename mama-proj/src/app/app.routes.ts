@@ -8,6 +8,7 @@ import { Questions } from './components/admin/questions/questions';
 import { Users } from './components/admin/users/users';
 import { QuestionCreate } from './components/admin/questions/question-create/question-create';
 import { QuestionEdit } from './components/admin/questions/question-edit/question-edit';
+import { Games } from './components/admin/games/games';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,10 @@ export const routes: Routes = [
       {
         path: 'questions/:id/edit',
         component: QuestionEdit
+      },
+      {
+        path: 'games',
+        component: Games
       }
     ]
   },

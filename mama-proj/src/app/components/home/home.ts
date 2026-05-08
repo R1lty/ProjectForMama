@@ -14,12 +14,13 @@ export class Home {
   }
 
   goToAdminPanel(): void {
-    const password = prompt('Enter admin password (mamus)');
+    // const password = prompt('Enter admin password (mamus)');
 
-    if (password === 'mamus') {
-      this.router.navigate(['/admin/dashboard']);
-    } else {
-      alert('Wrong password');
-    }
+    // if (password === 'mamus') {
+    //   this.router.navigate(['/admin/dashboard']);
+    // } else {
+    //   alert('Wrong password');
+    // }
+    this.router.navigate(['/admin/dashboard']);
   }
 }

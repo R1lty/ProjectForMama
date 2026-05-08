@@ -29,6 +29,11 @@ export class Dashboard {
       title: 'Вопросы',
       route: '/admin/dashboard/questions',
       icon: '?'
+    },
+    {
+      title: 'Игры',
+      route: '/admin/dashboard/games',
+      icon: ''
     }
   ];
 }
