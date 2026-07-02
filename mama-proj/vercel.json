@@ -1,0 +1,5 @@
+{
+  "buildCommand": "ng build",
+  "outputDirectory": "dist/mama-proj/browser",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
