@@ -42,7 +42,27 @@
   @if (!isLoading && showLobby) {
     <main class="presenter-lobby quiz-card quiz-card-glow">
       <div class="lobby-title">Комната ожидания</div>
+
       <div class="lobby-code">{{ roomCode }}</div>
+
+      @if (joinQrCodeDataUrl) {
+        <div class="join-qr-card">
+          <img
+            class="join-qr-image"
+            [src]="joinQrCodeDataUrl"
+            alt="Join game QR code"
+          />
+
+          <div class="join-qr-text">
+            Сканируй, чтобы подключиться
+          </div>
+
+          <div class="join-qr-link">
+            {{ joinUrl }}
+          </div>
+        </div>
+      }
+
       <div class="lobby-subtitle">Ожидание игроков...</div>
     </main>
   }

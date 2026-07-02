@@ -13,6 +13,7 @@ import {
   SessionsApiService
 } from '../../../shared/services/sessions-api.service';
 import { SessionRealtimeConnection, SessionRealtimeService } from '../../../shared/services/session-realtime.service';
+import * as QRCode from 'qrcode';
 
 @Component({
   selector: 'app-presenter-view',
@@ -24,6 +25,8 @@ export class PresenterView implements OnInit, OnDestroy {
   sessionId = 0;
   gameId = 0;
   roomCode = '------';
+  joinUrl = '';
+  joinQrCodeDataUrl = '';
 
   currentSession: GameSession | null = null;
   connectedPlayers: SessionPlayerInfo[] = [];
@@ -115,6 +118,7 @@ export class PresenterView implements OnInit, OnDestroy {
         this.currentSession = session;
         this.gameId = session.game_id;
         this.roomCode = session.code;
+        this.generateJoinQrCode();
 
         this.loadPlayers();
         this.loadQuestionsAndGame();
@@ -211,6 +215,10 @@ export class PresenterView implements OnInit, OnDestroy {
 
         this.currentSession = session;
         this.roomCode = session.code;
+
+        if (!this.joinQrCodeDataUrl) {
+          this.generateJoinQrCode();
+        }
 
         if (
           previousQuestionId !== null &&
@@ -383,6 +391,26 @@ export class PresenterView implements OnInit, OnDestroy {
     this.selectedQuestion = null;
     this.selectedCategoryName = '';
     this.selectedCategoryDescription = '';
+  }
+
+  private generateJoinQrCode(): void {
+    if (!this.roomCode || this.roomCode === '------') {
+      return;
+    }
+
+    this.joinUrl = `${window.location.origin}/join?code=${this.roomCode}`;
+
+    QRCode.toDataURL(this.joinUrl, {
+      width: 260,
+      margin: 2
+    })
+      .then(dataUrl => {
+        this.joinQrCodeDataUrl = dataUrl;
+        this.cdr.detectChanges();
+      })
+      .catch(error => {
+        console.error('Failed to generate QR code', error);
+      });
   }
 
   get buzzingPlayerName(): string {

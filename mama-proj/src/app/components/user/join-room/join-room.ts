@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SessionsApiService } from '../../../shared/services/sessions-api.service';
 import { FormsModule } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './join-room.html',
   styleUrl: './join-room.css',
 })
-export class JoinRoom {
+export class JoinRoom implements OnInit {
   roomCode = '';
   playerName = '';
 
@@ -18,9 +18,18 @@ export class JoinRoom {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private sessionsApiService: SessionsApiService,
     private cdr: ChangeDetectorRef
   ) {}
+
+  ngOnInit(): void {
+    const codeFromUrl = this.route.snapshot.queryParamMap.get('code');
+
+    if (codeFromUrl) {
+      this.roomCode = codeFromUrl;
+    }
+  }
 
   joinGame(): void {
     this.errorMessage = '';
