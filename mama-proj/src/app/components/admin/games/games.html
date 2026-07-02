@@ -219,11 +219,11 @@
         <p>Enter the room code</p>
 
         <input
-          #codeInput
           type="text"
           class="presenter-code-input"
           placeholder="e.g. 221856"
-          (keyup.enter)="confirmJoinAsPresenter(codeInput.value)"
+          [value]="presenterCode"
+          (input)="onPresenterCodeInput($any($event.target).value)"
         />
 
         <div class="presenter-code-actions">
@@ -235,13 +235,16 @@
             Cancel
           </button>
 
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="confirmJoinAsPresenter(codeInput.value)"
+          <a
+            class="btn btn-primary presenter-code-open-link"
+            [class.disabled]="!presenterJoinHref"
+            [attr.href]="presenterJoinHref"
+            target="_blank"
+            rel="noopener"
+            (click)="closePresenterCodePromptAfterClick()"
           >
             Open presenter view
-          </button>
+          </a>
         </div>
       </div>
     </div>

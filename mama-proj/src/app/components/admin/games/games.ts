@@ -358,8 +358,10 @@ export class Games implements OnInit {
   }
 
   showPresenterCodePrompt = false;
+  presenterCode = '';
 
   openPresenterCodePrompt(): void {
+    this.presenterCode = '';
     this.showPresenterCodePrompt = true;
   }
 
@@ -367,17 +369,15 @@ export class Games implements OnInit {
     this.showPresenterCodePrompt = false;
   }
 
-  confirmJoinAsPresenter(code: string): void {
-    const trimmedCode = code.trim();
+  onPresenterCodeInput(value: string): void {
+    this.presenterCode = value.trim();
+  }
 
-    if (!trimmedCode) {
-      return;
-    }
+  get presenterJoinHref(): string | null {
+    return this.presenterCode ? `/presenter/join/${encodeURIComponent(this.presenterCode)}` : null;
+  }
 
+  closePresenterCodePromptAfterClick(): void {
     this.showPresenterCodePrompt = false;
-
-    // Must be called synchronously inside this click handler (no prompt()/async
-    // work in between) or browsers silently block the popup.
-    window.open(`/presenter/join/${encodeURIComponent(trimmedCode)}`, '_blank');
   }
 }

@@ -305,6 +305,18 @@ button:disabled {
   gap: 12px;
 }
 
+.presenter-code-open-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.presenter-code-open-link.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
 @media (max-width: 800px) {
   .page-header,
   .section-header {
