@@ -1,0 +1,12 @@
+.presenter-join-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.error-message {
+  color: #ff6b6b;
+}

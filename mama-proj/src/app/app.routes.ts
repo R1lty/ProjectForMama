@@ -11,6 +11,7 @@ import { QuestionEdit } from './components/admin/questions/question-edit/questio
 import { Games } from './components/admin/games/games';
 import { PlayerSession } from './components/user/player-session/player-session';
 import { PresenterView } from './components/admin/presenter-view/presenter-view';
+import { PresenterJoin } from './components/admin/presenter-join/presenter-join';
 
 export const routes: Routes = [
   {
@@ -68,5 +69,9 @@ export const routes: Routes = [
   {
     path: 'presenter/session/:id',
     component: PresenterView
+  },
+  {
+    path: 'presenter/join/:code',
+    component: PresenterJoin
   }
 ];
