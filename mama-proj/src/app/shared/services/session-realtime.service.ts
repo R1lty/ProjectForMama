@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { getWsBaseUrl } from '../api-config';
 
 export interface SessionRealtimeMessage {
   type: string;
@@ -51,9 +52,6 @@ export class SessionRealtimeService {
   }
 
   private getSessionWebSocketUrl(sessionId: number): string {
-    const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-    const hostname = window.location.hostname;
-
-    return `${protocol}://${hostname}:3000/ws/sessions/${sessionId}`;
+    return `${getWsBaseUrl()}/ws/sessions/${sessionId}`;
   }
 }
