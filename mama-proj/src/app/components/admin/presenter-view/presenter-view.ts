@@ -51,6 +51,8 @@ export class PresenterView implements OnInit, OnDestroy {
   isLoading = true;
   errorMessage = '';
 
+  isGameFinished = false;
+
   wrongPlayerIds: number[] = [];
 
   private lastActiveQuestionId: number | null = null;
@@ -257,7 +259,7 @@ export class PresenterView implements OnInit, OnDestroy {
   }
 
   private syncPresenterScreen(): void {
-    if (!this.currentSession || this.isAnswerRevealScreen) {
+    if (!this.currentSession || this.isAnswerRevealScreen || this.isGameFinished) {
       return;
     }
 
@@ -372,6 +374,7 @@ export class PresenterView implements OnInit, OnDestroy {
     const nextRoundIndex = this.currentRoundIndex + 1;
 
     if (nextRoundIndex >= this.roundIds.length) {
+      this.finishGame();
       return;
     }
 
@@ -385,6 +388,28 @@ export class PresenterView implements OnInit, OnDestroy {
     this.loadRound(nextRoundId);
 
     this.cdr.detectChanges();
+  }
+
+  private finishGame(): void {
+    this.isGameFinished = true;
+
+    this.clearSelectedQuestion();
+
+    this.isAnswerRevealScreen = false;
+    this.answerRevealQuestion = null;
+    this.answerRevealCategoryName = '';
+    this.wrongPlayerIds = [];
+
+    this.sessionsApiService.getSessionPlayers(this.sessionId).subscribe({
+      next: players => {
+        this.connectedPlayers = players;
+        this.cdr.detectChanges();
+      },
+      error: error => {
+        console.error('Failed to load final leaderboard', error);
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   private clearSelectedQuestion(): void {
@@ -431,5 +456,22 @@ export class PresenterView implements OnInit, OnDestroy {
 
   get showBuzzingInfo(): boolean {
     return this.currentSession?.question_status === 'buzzing';
+  }
+
+  get leaderboardPlayers(): SessionPlayerInfo[] {
+    return [...this.connectedPlayers]
+      .sort((a, b) => b.score - a.score);
+  }
+
+  get firstPlacePlayer(): SessionPlayerInfo | null {
+    return this.leaderboardPlayers[0] || null;
+  }
+
+  get secondPlacePlayer(): SessionPlayerInfo | null {
+    return this.leaderboardPlayers[1] || null;
+  }
+
+  get thirdPlacePlayer(): SessionPlayerInfo | null {
+    return this.leaderboardPlayers[2] || null;
   }
 }

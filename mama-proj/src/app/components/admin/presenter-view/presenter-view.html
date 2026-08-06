@@ -67,7 +67,7 @@
     </main>
   }
 
-  @if (!isLoading && !showLobby) {
+  @if (!isLoading && !showLobby && !isGameFinished) {
     <main class="presenter-main quiz-card quiz-card-glow">
       <app-game-board
         [round]="currentRound"
@@ -82,7 +82,152 @@
     </main>
   }
 
-  @if (!isLoading) {
+  @if (!isLoading && isGameFinished) {
+    <main class="leaderboard-screen quiz-card quiz-card-glow">
+      <div class="leaderboard-header">
+        <div class="leaderboard-finish-label">
+          Игра окончена
+        </div>
+
+        <h1 class="leaderboard-title">
+          Победители
+        </h1>
+
+        <div class="leaderboard-subtitle">
+          Финальные результаты
+        </div>
+      </div>
+
+      @if (connectedPlayers.length === 0) {
+        <div class="users-placeholder">
+          Нет игроков для отображения.
+        </div>
+      }
+
+      @if (connectedPlayers.length > 0) {
+        <div class="podium-scene">
+          <div class="podium-stars"></div>
+
+          <!-- Второе место -->
+          @if (secondPlacePlayer) {
+            <div class="podium-position podium-position-second">
+              <div class="podium-player podium-player-silver">
+                <div class="podium-medal">2</div>
+
+                <div class="podium-avatar">
+                  {{ secondPlacePlayer.player_name.charAt(0).toUpperCase() }}
+                </div>
+
+                <div class="podium-player-name">
+                  {{ secondPlacePlayer.player_name }}
+                </div>
+
+                <div class="podium-player-score">
+                  {{ secondPlacePlayer.score }} пунктов
+                </div>
+              </div>
+
+              <div class="podium-block podium-block-second">
+                <div class="podium-place-number">2</div>
+                <div class="podium-place-label">место</div>
+              </div>
+            </div>
+          }
+
+          <!-- Первое место -->
+          @if (firstPlacePlayer) {
+            <div class="podium-position podium-position-first">
+              <div class="winner-glory-rays"></div>
+              <div class="winner-crown">♛</div>
+
+              <div class="podium-player podium-player-gold">
+                <div class="podium-medal">1</div>
+
+                <div class="podium-avatar">
+                  {{ firstPlacePlayer.player_name.charAt(0).toUpperCase() }}
+                </div>
+
+                <div class="podium-player-name">
+                  {{ firstPlacePlayer.player_name }}
+                </div>
+
+                <div class="podium-player-score">
+                  {{ firstPlacePlayer.score }} пунктов
+                </div>
+              </div>
+
+              <div class="podium-block podium-block-first">
+                <div class="podium-place-number">1</div>
+                <div class="podium-place-label">место</div>
+              </div>
+            </div>
+          }
+
+          <!-- Третье место -->
+          @if (thirdPlacePlayer) {
+            <div class="podium-position podium-position-third">
+              <div class="podium-player podium-player-bronze">
+                <div class="podium-medal">3</div>
+
+                <div class="podium-avatar">
+                  {{ thirdPlacePlayer.player_name.charAt(0).toUpperCase() }}
+                </div>
+
+                <div class="podium-player-name">
+                  {{ thirdPlacePlayer.player_name }}
+                </div>
+
+                <div class="podium-player-score">
+                  {{ thirdPlacePlayer.score }} пунктов
+                </div>
+              </div>
+
+              <div class="podium-block podium-block-third">
+                <div class="podium-place-number">3</div>
+                <div class="podium-place-label">место</div>
+              </div>
+            </div>
+          }
+        </div>
+
+        @if (leaderboardPlayers.length > 3) {
+          <section class="leaderboard-other-players">
+            <div class="leaderboard-other-title">
+              Остальные результаты
+            </div>
+
+            <div class="leaderboard-list">
+              @for (
+                player of leaderboardPlayers.slice(3);
+                track player.player_id;
+                let index = $index
+              ) {
+                <div class="leaderboard-list-item">
+                  <div class="leaderboard-list-place">
+                    {{ index + 4 }}
+                  </div>
+
+                  <div class="leaderboard-list-avatar">
+                    {{ player.player_name.charAt(0).toUpperCase() }}
+                  </div>
+
+                  <div class="leaderboard-list-name">
+                    {{ player.player_name }}
+                  </div>
+
+                  <div class="leaderboard-list-score">
+                    {{ player.score }} пунктов
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+        }
+      }
+    </main>
+  }
+
+  @if (!isLoading && !isGameFinished) {
     <section class="presenter-players-panel quiz-card">
       <div class="players-panel-header">
         <h2>Игроки</h2>

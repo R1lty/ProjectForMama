@@ -21,6 +21,5 @@ export class Home {
     } else {
       alert('Wrong password');
     }
-    this.router.navigate(['/admin/dashboard']);
   }
 }
