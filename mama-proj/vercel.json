@@ -1,12 +1,14 @@
 {
   "buildCommand": "ng build",
   "outputDirectory": "dist/mama-proj/browser",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
-{
-  "buildCommand": "ng build",
-  "outputDirectory": "dist/mama-proj/browser",
   "rewrites": [
-    { "source": "/assets/(.*)", "destination": "/assets/$1" },
-    { "source": "(/.*)", "destination": "/index.html" }
+    {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
